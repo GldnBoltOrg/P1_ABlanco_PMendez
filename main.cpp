@@ -1,13 +1,11 @@
 #include <iostream>
+#include "MemoryManager.cpp"
 
 
 int main() {
-    auto lang = "C++";
-    std::cout << "Hello and welcome to " << lang << "!\n";
+    MemoryManager memory_manager(1024);
+    int id1 = memory_manager.create(sizeof(int), nullptr);
+    memory_manager.set(id1, 42);
+    std::cout << memory_manager.get(id1) << std::endl;
 
-    for (int i = 1; i <= 5; i++) {
-        std::cout << "i = " << i << std::endl;
-    }
-
-    return 0;
 }
