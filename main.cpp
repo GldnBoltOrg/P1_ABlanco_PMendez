@@ -1,11 +1,12 @@
-#include <iostream>
+#include <typeindex>
 #include "MemoryManager.cpp"
 
-
 int main() {
-    MemoryManager memory_manager(1024);
-    int id1 = memory_manager.create(sizeof(int), nullptr);
-    memory_manager.set(id1, 42);
-    std::cout << memory_manager.get(id1) << std::endl;
+    MemoryManager mem(1024);
 
+    int id1 = mem.create(sizeof(int));
+    int id2 = mem.create(sizeof(float));
+
+    mem.set(id1, 100);
+    mem.set(id2, 3.14f);
 }
