@@ -1,4 +1,6 @@
 #include <algorithm>
+#include <chrono>
+#include <fstream>
 #include <iostream>
 #include <unordered_map>
 #include <typeindex>
@@ -9,6 +11,7 @@ class MemoryManager {
 private:
     size_t total_size;
     void* memory_block;
+    std::string dump_folder;
 
     struct Block {
         size_t size;
@@ -20,9 +23,10 @@ private:
     size_t used_memory = 0;
 
 public:
-    explicit MemoryManager(size_t size) {
+    explicit MemoryManager(size_t size, std::string folder) {
         total_size = size;
         memory_block = malloc(total_size);
+        dump_folder = folder;
         std::cout << "Memory block allocated at " << memory_block << " with size " << total_size << " bytes\n";
     }
 
@@ -40,6 +44,7 @@ public:
 
         std::cout << "Block " << new_id << " at address " << address << " with size " << size << " bytes\n";
         return new_id;
+        create_dump();
     }
 
     template<typename T>
@@ -60,19 +65,20 @@ public:
         *ptr = value;
 
         std::cout << "Value set at block " << id << ": " << *ptr << "\n";
+        create_dump();
     }
 
-    template<typename T>
-    T get(int id) {
+    int get(int id) {
         if (memory_map.find(id) == memory_map.end()) {
             std::cerr << "Error: Invalid block ID\n";
-            return T();  // Devuelve un valor predeterminado de T
+            return -1;
         }
 
         Block& block = memory_map[id];
 
-        T* ptr = static_cast<T*>(block.address);
+        int* ptr = static_cast<int*>(block.address);
         return *ptr;
+        create_dump();
     }
 
     void increaseRefCount(int id) {
@@ -83,6 +89,7 @@ public:
 
         memory_map[id].refCount++;
         std::cout << "Reference count increased for block " << id << ": " << memory_map[id].refCount << "\n";
+        create_dump();
     }
 
     void decreaseRefCount(int id) {
@@ -97,6 +104,7 @@ public:
 
         memory_map[id].refCount--;
         std::cout << "Reference count decreased for block " << id << ": " << memory_map[id].refCount << "\n";
+        create_dump();
     }
 
     void collect_garbage() {
@@ -108,8 +116,56 @@ public:
                 ++it;
             }
         }
+        create_dump();
     }
 
     void defragment() {
+        std::cout << "Starting memory defragmentation...\n";
+
+        // Recolectar bloques usados
+        std::vector<std::pair<int, Block>> used_blocks;
+        for (const auto& [id, block] : memory_map) {
+            if (block.refCount > 0) {
+                used_blocks.push_back({id, block});
+            }
+        }
+
+        // Ordenarlos por dirección original para mantener orden
+        std::sort(used_blocks.begin(), used_blocks.end(), [](const auto& a, const auto& b) {
+            return a.second.address < b.second.address;
+        });
+
+        size_t offset = 0;
+
+        for (auto& [id, block] : used_blocks) {
+            void* new_address = static_cast<char*>(memory_block) + offset;
+
+            // Solo copiar si se mueve a otra dirección
+            if (block.address != new_address) {
+                char* src = static_cast<char*>(block.address);
+                char* dest = static_cast<char*>(new_address);
+
+                for (size_t i = 0; i < block.size; ++i) {
+                    dest[i] = src[i];
+                }
+
+                block.address = new_address;
+                std::cout << "Block " << id << " moved to address " << new_address << "\n";
+            }
+
+            // Actualizar el mapa con la nueva dirección
+            memory_map[id] = block;
+
+            offset += block.size;
+        }
+
+        used_memory = offset;
+
+        std::cout << "Defragmentation complete. Used memory: " << used_memory << " bytes\n";
+        create_dump();
     }
+
+    void create_dump() {
+    }
+
 };
