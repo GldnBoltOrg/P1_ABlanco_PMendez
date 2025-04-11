@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(untitled main.cpp
         MemoryManager.cpp
-        MPointer.h
+        MPointer.cpp
 )
 
 target_link_libraries(untitled ws2_32)
