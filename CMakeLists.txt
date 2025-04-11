@@ -8,3 +8,8 @@ add_executable(untitled main.cpp
         MemoryManager.cpp
         MPointer.h
 )
+
+target_link_libraries(untitled ws2_32)
+
+
+
