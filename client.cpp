@@ -40,8 +40,9 @@ int main(int argc, char* argv[]) {
                  "1. CREATE <size>\n" <<
                  "2. SET <id> <value>\n" <<
                  "3. GET <id>\n" <<
-                 "4. DELETE <id>\n" <<
-                 "5. EXIT\n";;
+                 "4. INCREASE <id>\n" <<
+                 "5. DECREASE <id>\n" <<
+                 "6. exit\n";;
 
     std::string message;
     char buffer[1024];

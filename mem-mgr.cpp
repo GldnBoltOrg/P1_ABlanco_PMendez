@@ -2,7 +2,6 @@
 #include <iostream>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <vector>
 #include <sstream>
 #include <map>
 #include "MemoryManager.cpp"
@@ -115,8 +114,11 @@ int main(int argc, char* argv[]) {
             int id, value;
             iss >> id >> value;
             if (allocatedBlocks.find(id) != allocatedBlocks.end()) {
-                memoryManager.set(id, value);
-                response = "SET OK\n";
+                if (memoryManager.set(id, value)){
+                    response = "SET OK\n";
+                } else {
+                    response = "ERROR: No se pudo establecer el valor\n";
+                }
             } else {
                 response = "ERROR: ID no encontrado\n";
             }
@@ -131,16 +133,28 @@ int main(int argc, char* argv[]) {
                 response = "ERROR: ID no encontrado\n";
             }
         }
-        else if (cmd == "DELETE") {
+        else if (cmd == "INCREASE") {
+            int id;
+            iss >> id;
+            if (allocatedBlocks.find(id) != allocatedBlocks.end()) {
+                memoryManager.increaseRefCount(id);
+                response = "INCREASE OK\n";
+            } else {
+                response = "ERROR: ID no encontrado\n";
+            }
+        }
+        else if (cmd == "DECREASE") {
             int id;
             iss >> id;
             if (allocatedBlocks.find(id) != allocatedBlocks.end()) {
                 memoryManager.decreaseRefCount(id);
-                allocatedBlocks.erase(id);
-                response = "DELETED\n";
+                response = "DECREASE OK\n";
             } else {
                 response = "ERROR: ID no encontrado\n";
             }
+        }
+        else if (cmd == "EXIT") {
+            break;
         }
         else {
             response = "ERROR: Comando no reconocido\n";

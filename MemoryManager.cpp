@@ -42,26 +42,26 @@ public:
         used_memory += size;
 
         std::cout << "Se creó bloque #" << new_id << " en la direccion: " << address << ", de tamaño:" << size << " bytes\n";
-        create_dump();
         return new_id;
     }
 
     template<typename T>
-    void set(int id, T value) {
+    bool set(int id, T value) {
         if (memory_map.find(id) == memory_map.end()) {
             std::cerr << "Error: ID ivalido\n";
-            return;
+            return false;
         }
 
         Block& block = memory_map[id];
 
         if (sizeof(T) > block.size) {
             std::cerr << "Error: El valor es mayor al tamaño del bloque\n";
-            return;
+            return false;
         }
 
         T* ptr = static_cast<T*>(block.address);
         *ptr = value;
+        return true;
 
         create_dump();
     }
@@ -167,7 +167,6 @@ public:
             file << "ID: " << id
                 << " | Address: " << block.address
                 << " | Size: " << block.size
-                << " | Value: " << get(id)
                 << " | RefCount: " << block.refCount << "\n";
         }
         file.close();
