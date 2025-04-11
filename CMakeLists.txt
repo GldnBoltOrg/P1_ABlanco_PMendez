@@ -6,10 +6,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(untitled main.cpp
         MemoryManager.cpp
-        Node.cpp
-        Node.h
-        Lista.cpp
-        Lista.h
 )
 
 target_link_libraries(untitled ws2_32)
