@@ -76,6 +76,7 @@ public:
 
         int* ptr = static_cast<int*>(block.address);
         increaseRefCount(id);
+        create_dump();
         return *ptr;
     }
 
