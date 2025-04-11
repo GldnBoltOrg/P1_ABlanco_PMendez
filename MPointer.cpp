@@ -4,6 +4,7 @@
 #include "MPointer.h"
 #include <iostream>
 #include <sstream>
+#include <ws2tcpip.h>
 
 template<typename T>
 SOCKET MPointer<T>::socketFD;
