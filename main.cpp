@@ -21,15 +21,15 @@ int main() {
 
     MPointer<int>::Init(ip, port);
 
-    MPointer<int> ptr;
+    static MPointer<int> ptr;
     Lista lista;
 
     while (true) {
         std::cout << "\n--- Menú Principal ---\n";
         std::cout << "1. Crear nuevo MPointer<int>\n";
-        std::cout << "2. Asignar valor a MPointer actual\n";
-        std::cout << "3. Leer valor por ID\n";
-        std::cout << "4. Usar lista enlazada con MPointer\n";
+        std::cout << "2. Asignar valor\n";
+        std::cout << "3. Leer valor\n";
+        std::cout << "4. Probar lista enlazada\n";
         std::cout << "5. Salir\n";
         std::cout << "Seleccione una opción: ";
 
@@ -48,11 +48,7 @@ int main() {
             std::cout << "Valor asignado.\n";
         }
         else if (opcion == 3) {
-            int id;
-            std::cout << "Ingrese ID del MPointer a leer: ";
-            std::cin >> id;
-            MPointer<int> temp = MPointer<int>::FromId(id);
-            int valor = *temp;
+            int valor = *ptr;
             std::cout << "Valor leído desde el servidor: " << valor << "\n";
         }
         else if (opcion == 4) {
