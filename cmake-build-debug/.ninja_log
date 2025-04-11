@@ -1,0 +1,7 @@
+# ninja log v6
+12	1522	7661092486846694	CMakeFiles/untitled.dir/MemoryManager.cpp.obj	5cd2b863693c5ede
+6	2433	7661050574852868	CMakeFiles/untitled.dir/main.cpp.obj	716878d3c93acf82
+5	243	7661093541623204	build.ninja	51e7b03612fcb885
+5	158	7661052759914175	untitled.exe	87fff1a9c2e192fa
+2	13	7661050574117278	clean	8f9597ac2bd17386
+13	1987	7661097584650298	CMakeFiles/untitled.dir/Node.cpp.obj	e0e2b6d2d12ef4de
