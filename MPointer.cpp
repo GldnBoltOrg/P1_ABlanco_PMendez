@@ -4,12 +4,6 @@
 #include "MPointer.h"
 #include <iostream>
 #include <sstream>
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#pragma comment(lib, "ws2_32.lib")
-
-
 
 template<typename T>
 SOCKET MPointer<T>::socketFD;
