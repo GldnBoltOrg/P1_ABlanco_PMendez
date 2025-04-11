@@ -142,6 +142,17 @@ int main(int argc, char* argv[]) {
                 response = "ERROR: ID no encontrado\n";
             }
         }
+        else if (cmd == "INCR") {
+    		int id;
+    		iss >> id;
+    		if (allocatedBlocks.find(id) != allocatedBlocks.end()) {
+        		memoryManager.increaseRefCount(id);
+        		response = "INCR OK\n";
+    	} else {
+        	response = "ERROR: ID no encontrado\n";
+    	}
+	}
+
         else {
             response = "ERROR: Comando no reconocido\n";
         }

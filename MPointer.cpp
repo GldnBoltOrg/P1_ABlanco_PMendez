@@ -4,6 +4,12 @@
 #include "MPointer.h"
 #include <iostream>
 #include <sstream>
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#pragma comment(lib, "ws2_32.lib")
+
+
 
 template<typename T>
 SOCKET MPointer<T>::socketFD;
@@ -78,7 +84,7 @@ MPointer<T> MPointer<T>::New() {
 template<typename T>
 void MPointer<T>::operator=(const MPointer<T>& other) {
     id = other.id;
-    // en este sistema, no se implementa IncreaseRefCount explícitamente
+    sendCommand("INCR " + std::to_string(id));
 }
 
 template<typename T>
