@@ -59,14 +59,15 @@ int MPointer<T>::extractIdFromCreate(const std::string& response) {
     return id;
 }
 
-template<>
-int MPointer<int>::extractValueFromGet(const std::string& response) {
+template<typename T>
+T MPointer<T>::extractValueFromGet(const std::string& response) {
     std::istringstream iss(response);
     std::string token;
-    int value;
+    T value;
     iss >> token >> value;
     return value;
 }
+
 
 template<typename T>
 MPointer<T> MPointer<T>::New() {
