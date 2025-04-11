@@ -42,6 +42,7 @@ public:
         used_memory += size;
 
         std::cout << "Se creo bloque #" << new_id << " en la direccion: " << address << ", de tamano:" << size << " bytes\n";
+        create_dump();
         return new_id;
     }
 
@@ -61,9 +62,8 @@ public:
 
         T* ptr = static_cast<T*>(block.address);
         *ptr = value;
-        return true;
-
         create_dump();
+        return true;
     }
 
     int get(int id) {
