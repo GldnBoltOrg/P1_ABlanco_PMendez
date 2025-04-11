@@ -26,7 +26,7 @@ public:
         total_size = size;
         memory_block = malloc(total_size);
         dump_folder = folder;
-        std::cout << "Bloque de memoria ubicado en: " << memory_block << ", de tamaño:" << total_size << " bytes\n";
+        std::cout << "Bloque de memoria ubicado en: " << memory_block << ", de tamano:" << total_size << " bytes\n";
     }
 
     int create(size_t size) {
@@ -41,7 +41,7 @@ public:
         memory_map[new_id] = {size, 1, address};
         used_memory += size;
 
-        std::cout << "Se creó bloque #" << new_id << " en la direccion: " << address << ", de tamaño:" << size << " bytes\n";
+        std::cout << "Se creo bloque #" << new_id << " en la direccion: " << address << ", de tamano:" << size << " bytes\n";
         return new_id;
     }
 

@@ -4,7 +4,7 @@
 #include "MPointer.h"
 
 int main() {
-    MPointer<int>::Init("127.0.0.1", 5000);  // Dirección y puerto del servidor
+    MPointer<int>::Init("127.0.0.1", 9000);  // Dirección y puerto del servidor
 
     std::cout << "Creando MPointer<int> remoto...\n";
     MPointer<int> miEntero = MPointer<int>::New();
@@ -17,7 +17,7 @@ int main() {
 
     std::cout << "Valor recuperado: " << valor << std::endl;
 
-    return 0;  // Destructor de miEntero enviará DELETE automáticamente
+    return 0;
 }
 
 
