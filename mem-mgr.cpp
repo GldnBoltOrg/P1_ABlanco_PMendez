@@ -39,14 +39,12 @@ int main(int argc, char* argv[]) {
     }
 
     std::cout << "Iniciando servidor en el puerto " << port << "...\n";
-    std::cout << "Asignando " << memSizeMB << "MB de memoria.\n";
+    std::cout << "Asignando " << memSizeMB << "MB de memoria total\n";
 
-    // Inicializar Memory Manager
     size_t totalMem = memSizeMB * 1024 * 1024;
-    MemoryManager memoryManager(totalMem);
-    std::map<int, int> allocatedBlocks; // Mapa para asociar ID con valores de memoria
+    MemoryManager memoryManager(totalMem, dumpFolder);
+    std::map<int, int> allocatedBlocks;
 
-    // Inicializar Winsock
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2), &wsaData);
 
@@ -88,7 +86,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::cout << "Cliente conectado.\n";
+    std::cout << "Cliente conectado\n";
 
     char buffer[1024];
     while (true) {
