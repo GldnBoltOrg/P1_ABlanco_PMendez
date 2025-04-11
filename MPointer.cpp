@@ -68,7 +68,6 @@ T MPointer<T>::extractValueFromGet(const std::string& response) {
     return value;
 }
 
-
 template<typename T>
 MPointer<T> MPointer<T>::New() {
     std::string response = sendCommand("CREATE " + std::to_string(sizeof(T)));
